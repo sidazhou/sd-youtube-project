@@ -13,8 +13,6 @@ gem 'tux'
 
 gem 'google-api-client'
 gem 'json'
-gem 'launchy'
-gem 'thin'
 gem 'trollop'
 
 group :development, :test do

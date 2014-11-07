@@ -18,4 +18,6 @@ TO DO LIST:
   
 - authenticate useing youtube logins
 - ability to change quality, 360p 480p etc
-- fast forward button / rewind functionality
+- fast forward button / rewind functionality, link to keybord shortcuts (disablekb=0)
+
+- remember to remove DEVELOPER_KEY from source code

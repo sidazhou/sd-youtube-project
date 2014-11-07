@@ -2,23 +2,32 @@
 
 class SdYoutubeApi
   attr_reader :videos, :channels, :playlists
+  attr_accessor :opts, :client, :youtube #testing
+
     # Set DEVELOPER_KEY to the "API key" value from the "Access" tab of the
     # Google Developers Console <https://cloud.google.com/console>
     # Please ensure that you have enabled the YouTube Data API for your project.
-    DEVELOPER_KEY = "AIzaSyAjEkk7g0WFpKwRr1F5Q0lPqsOPNQcU69k"
-    YOUTUBE_API_SERVICE_NAME = "youtube"
-    YOUTUBE_API_VERSION = "v3"
+    @@DEVELOPER_KEY = "AIzaSyAjEkk7g0WFpKwRr1F5Q0lPqsOPNQcU69k"
+    @@YOUTUBE_API_SERVICE_NAME = "youtube"
+    @@YOUTUBE_API_VERSION = "v3"
 
-  def initialize(search_str='google',num_results='10')
+  def initialize(search_str='google',num_results=10,type_str='video,channel,playlist') 
+    part_str = 'id,snippet'  # this input arg has to be id,snippet for now
 
     @opts = Trollop::options do
       opt :q, 'Search term', :type => String, :default => search_str
-      opt :maxResults, 'Max results', :type => :int, :default => num_results
+      # http://stackoverflow.com/questions/16227540/need-help-to-get-more-than-100-results-using-youtube-search-api
+      # capping totalResults at 100 (only applicable for v2(?) Haven't tried this myself yet)
+      # num_results is sum of videos+channels+playlists
+      opt :maxResults, 'Max results', :type => :int, :default => num_results  
+      opt :part, 'parts included', :type => String, :default => part_str
+      opt :type, 'type included', :type => String, :default => type_str
     end
 
-    @client = Google::APIClient.new(:key => DEVELOPER_KEY,
+
+    @client = Google::APIClient.new(:key => @@DEVELOPER_KEY,
                                    :authorization => nil)
-    @youtube = @client.discovered_api(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION)
+    @youtube = @client.discovered_api(@@YOUTUBE_API_SERVICE_NAME, @@YOUTUBE_API_VERSION)
 
     @videos = []
     @channels = []
@@ -28,12 +37,10 @@ class SdYoutubeApi
   def execute_search
     # Call the search.list method to retrieve results matching the specified
     # query term.
-    @opts[:part] = 'id,snippet'
     search_response = @client.execute!(
       :api_method => @youtube.search.list,
       :parameters => @opts
     )
-
     # Add each result to the appropriate list, and then display the lists of
     # matching videos, channels, and playlists.
     search_response.data.items.each do |search_result|
@@ -51,10 +58,14 @@ class SdYoutubeApi
 end
 
 
-# require_relative '../config/environment.rb'
-# myo = SdYoutubeApi.new("dota cinema",10)
+# require_relative '../config/environment.rb'  # circular requiring, hence the following test is run twice
+# binding.pry
+# # def initialize(search_str='google',num_results=10,type_str='video,channel,playlist') 
+
+# myo = SdYoutubeApi.new('dota cinema',5,'video') 
 # myo.execute_search
 # puts myo.videos
+# puts myo.videos.size
 # puts "======================"
 # puts myo.channels
 # puts "======================"
@@ -64,3 +75,12 @@ end
 # # {:video_title=>"Dota 2 - XMG Captains Draft 2.0 - Evil Geniuses vs Team Secret - Game 1", :video_id=>"gOSohcDcws0"}
 # # {:video_title=>"Kunkka 3x Kill DotaCinema CD Dota 2", :video_id=>"KoRhtJ7LAVs"}
 # # {:video_title=>"Dota 2 Balance of the Bladekeeper (Legendary Juggernaut Set)", :video_id=>"GTxymmrHnBw"}
+
+
+
+
+
+
+
+
+

@@ -31,3 +31,5 @@ require APP_ROOT.join('app', 'actions')
 
 require 'google/api_client'
 require 'trollop'
+
+require_relative '../lib/sd_youtube_api'
