@@ -66,15 +66,18 @@ end
 
 
 # require_relative '../config/environment.rb'  # circular requiring, hence the following test is run twice
-# binding.pry
+
 #   # sd_default_opts={
 #   #    search_str: 'google',
 #   #    num_results: 10,
 #   #    type_str: 'video,channel,playlist',
 #   #    part_str: 'id,snippet'  # this input arg has to be id,snippet for now
 
-# myo = SdYoutubeApi.new(search_str: "dota", type_str: 'video')
+# myo = SdYoutubeApi.new(search_str: "dota", type_str: 'video', num_results: 5)
 # myo.execute_search
+
+# binding.pry
+
 # puts myo.videos
 # puts myo.videos.size
 # puts "======================"

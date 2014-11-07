@@ -21,8 +21,22 @@ body {
 }
 
 #main {
+  position: absolute;
   margin-top: 110px;
   margin-left: 20px;
   background-color: white;
   width: 560px;
+}
+
+.video_entry {
+  border: 1px solid blue;
+}
+
+.video_entry_container {
+  position: absolute;
+  background-color: white;
+  margin-top: 110px;
+  margin-left: 620px;
+  width: 250px;
+
 }

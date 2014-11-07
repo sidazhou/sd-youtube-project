@@ -33,3 +33,4 @@ require 'google/api_client'
 require 'trollop'
 
 require_relative '../lib/sd_youtube_api'
+require_relative '../lib/helpers'
