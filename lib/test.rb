@@ -45,7 +45,7 @@ search_response.data.items.each do |search_result|
       playlists.push("#{search_result.snippet.title} (#{search_result.id.playlistId})")
   end
 end
-
+binding.pry
 puts "###############################"
 
 puts "Videos:\n", videos, "\n"
