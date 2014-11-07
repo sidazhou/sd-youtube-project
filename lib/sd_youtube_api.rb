@@ -11,17 +11,24 @@ class SdYoutubeApi
     @@YOUTUBE_API_SERVICE_NAME = "youtube"
     @@YOUTUBE_API_VERSION = "v3"
 
-  def initialize(search_str='google',num_results=10,type_str='video,channel,playlist') 
-    part_str = 'id,snippet'  # this input arg has to be id,snippet for now
+  def initialize(options = {})
+
+    sd_default_opts={
+      search_str: 'google',
+      num_results: 10,
+      type_str: 'video,channel,playlist',
+      part_str: 'id,snippet'  # this input arg has to be id,snippet for now
+    }.merge(options)
+
 
     @opts = Trollop::options do
-      opt :q, 'Search term', :type => String, :default => search_str
+      opt :q, 'Search term', :type => String, :default => sd_default_opts[:search_str]
       # http://stackoverflow.com/questions/16227540/need-help-to-get-more-than-100-results-using-youtube-search-api
       # capping totalResults at 100 (only applicable for v2(?) Haven't tried this myself yet)
       # num_results is sum of videos+channels+playlists
-      opt :maxResults, 'Max results', :type => :int, :default => num_results  
-      opt :part, 'parts included', :type => String, :default => part_str
-      opt :type, 'type included', :type => String, :default => type_str
+      opt :maxResults, 'Max results', :type => :int, :default => sd_default_opts[:num_results]  
+      opt :part, 'parts included', :type => String, :default => sd_default_opts[:part_str]
+      opt :type, 'type included', :type => String, :default => sd_default_opts[:type_str]
     end
 
 
@@ -58,15 +65,19 @@ class SdYoutubeApi
 end
 
 
-require_relative '../config/environment.rb'  # circular requiring, hence the following test is run twice
+# require_relative '../config/environment.rb'  # circular requiring, hence the following test is run twice
 # binding.pry
-# def initialize(search_str='google',num_results=10,type_str='video,channel,playlist') 
+#   # sd_default_opts={
+#   #    search_str: 'google',
+#   #    num_results: 10,
+#   #    type_str: 'video,channel,playlist',
+#   #    part_str: 'id,snippet'  # this input arg has to be id,snippet for now
 
-myo = SdYoutubeApi.new('dota cinema',5,'video') 
-myo.execute_search
-puts myo.videos
-puts myo.videos.size
-puts "======================"
+# myo = SdYoutubeApi.new(search_str: "dota", type_str: 'video')
+# myo.execute_search
+# puts myo.videos
+# puts myo.videos.size
+# puts "======================"
 # puts myo.channels
 # puts "======================"
 

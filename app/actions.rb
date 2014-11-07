@@ -12,7 +12,7 @@ end
 post '/ifeellucky' do
   # puts params[:searched_str]
 
-  sd_obj = SdYoutubeApi.new(params[:searched_str],1,'video')
+  sd_obj = SdYoutubeApi.new(search_str: params[:searched_str], num_results: 1, type_str: 'video')
   sd_obj.execute_search
 
   # puts sd_obj.videos.first[:video_title]
@@ -24,24 +24,17 @@ post '/ifeellucky' do
   erb :'ifeellucky'
 end
 
+# require_relative '../config/environment.rb'  # circular requiring, hence the following test is run twice
+#   # sd_default_opts={
+#   #    search_str: 'google',
+#   #    num_results: 10,
+#   #    type_str: 'video,channel,playlist',
+#   #    part_str: 'id,snippet'  # this input arg has to be id,snippet for now
 
-
-# require_relative '../config/environment.rb'
-# myo = SdYoutubeApi.new("dota cinema",10,'video')
+# myo = SdYoutubeApi.new(search_str: "dota", type_str: 'video')
 # myo.execute_search
 # puts myo.videos
-# puts "======================"
-# puts myo.channels
-# puts "======================"
-
-# # outputs:
-# # {:video_title=>"Dota 2 Fails of the Week - Ep. 113", :video_id=>"-g9uxa2XWMo"}
-# # {:video_title=>"Dota 2 - XMG Captains Draft 2.0 - Evil Geniuses vs Team Secret - Game 1", :video_id=>"gOSohcDcws0"}
-# # {:video_title=>"Kunkka 3x Kill DotaCinema CD Dota 2", :video_id=>"KoRhtJ7LAVs"}
-# # {:video_title=>"Dota 2 Balance of the Bladekeeper (Legendary Juggernaut Set)", :video_id=>"GTxymmrHnBw"}
-
-
-
+# puts myo.videos.size
 
 
 
