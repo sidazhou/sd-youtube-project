@@ -58,15 +58,15 @@ class SdYoutubeApi
 end
 
 
-# require_relative '../config/environment.rb'  # circular requiring, hence the following test is run twice
+require_relative '../config/environment.rb'  # circular requiring, hence the following test is run twice
 # binding.pry
-# # def initialize(search_str='google',num_results=10,type_str='video,channel,playlist') 
+# def initialize(search_str='google',num_results=10,type_str='video,channel,playlist') 
 
-# myo = SdYoutubeApi.new('dota cinema',5,'video') 
-# myo.execute_search
-# puts myo.videos
-# puts myo.videos.size
-# puts "======================"
+myo = SdYoutubeApi.new('dota cinema',5,'video') 
+myo.execute_search
+puts myo.videos
+puts myo.videos.size
+puts "======================"
 # puts myo.channels
 # puts "======================"
 

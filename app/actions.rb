@@ -11,7 +11,7 @@ end
 
 post '/ifeellucky' do
   # puts params[:searched_str]
-  
+
   sd_obj = SdYoutubeApi.new(params[:searched_str],1,'video')
   sd_obj.execute_search
 
@@ -21,14 +21,13 @@ post '/ifeellucky' do
 
   @video_id = sd_obj.videos.first[:video_id]  # this is the video returned by search
 
-
   erb :'ifeellucky'
 end
 
 
 
 # require_relative '../config/environment.rb'
-# myo = SdYoutubeApi.new("dota cinema",10)
+# myo = SdYoutubeApi.new("dota cinema",10,'video')
 # myo.execute_search
 # puts myo.videos
 # puts "======================"
@@ -40,3 +39,9 @@ end
 # # {:video_title=>"Dota 2 - XMG Captains Draft 2.0 - Evil Geniuses vs Team Secret - Game 1", :video_id=>"gOSohcDcws0"}
 # # {:video_title=>"Kunkka 3x Kill DotaCinema CD Dota 2", :video_id=>"KoRhtJ7LAVs"}
 # # {:video_title=>"Dota 2 Balance of the Bladekeeper (Legendary Juggernaut Set)", :video_id=>"GTxymmrHnBw"}
+
+
+
+
+
+

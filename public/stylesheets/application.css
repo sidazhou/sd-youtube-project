@@ -1,0 +1,28 @@
+body {
+  background: #f3f3f3;
+}
+
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 80px;
+  background-color: white;
+  width: 100%;
+}
+
+
+/* The Magic Float Center Code */
+.float_center {
+  position: relative;
+  margin-left: 25%;
+  top: 10px;
+  left: 0;
+}
+
+#main {
+  margin-top: 110px;
+  margin-left: 20px;
+  background-color: white;
+  width: 560px;
+}

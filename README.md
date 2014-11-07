@@ -12,12 +12,29 @@ Brought to you by Lighthouse Labs
 TO DO LIST:
 
 - search functionality:
-  - get first video from search result
+  - show a playlist on the side
   - get grouped videos from a channel
   - 
   
 - authenticate useing youtube logins
 - ability to change quality, 360p 480p etc
-- fast forward button / rewind functionality, link to keybord shortcuts (disablekb=0)
+    
+    vq=large
+
+- fast forward button / rewind functionality, link to keybord shortcuts (disablekb=0) 
+
+    autoplay=1
+
+    disablekb
+
+    Spacebar:  Play / Pause
+    Arrow Left:  Jump back 5s in the current video
+    Arrow Right:  Jump ahead 5s in the current video
+    Arrow Up:  Volume up 5%
+    Arrow Down:  Volume Down 5%
+
+
+    enablejsapi
+    The enablejsapi allows you to enable the Javascript API to control the YouTube player. If you need this parameter (which is “1” to enable and “0” by default incidentally)
 
 - remember to remove DEVELOPER_KEY from source code
