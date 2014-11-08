@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140321144528) do
+ActiveRecord::Schema.define(version: 20141108145200) do
 
-  create_table "users", force: true do |t|
-    t.string "name"
-    t.string "email"
+  create_table "video_groups", force: true do |t|
+    t.string "group_title"
+    t.float  "avg_relevance"
+  end
+
+  create_table "videos", force: true do |t|
+    t.string  "video_id"
+    t.string  "video_title"
+    t.string  "video_title_body"
+    t.string  "video_title_game"
+    t.float   "relevance"
+    t.integer "video_group_id"
   end
 
 end

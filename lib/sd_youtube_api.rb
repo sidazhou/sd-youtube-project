@@ -2,7 +2,6 @@
 
 class SdYoutubeApi
   attr_reader :videos, :channels, :playlists
-  attr_accessor :opts, :client, :youtube #testing
 
     # Set DEVELOPER_KEY to the "API key" value from the "Access" tab of the
     # Google Developers Console <https://cloud.google.com/console>
