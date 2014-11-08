@@ -29,14 +29,28 @@ body {
 }
 
 .video_entry {
-  border: 1px solid blue;
+  color: black;
+  margin: 5px;
 }
+
+.video_entry:hover {
+  color: violet;
+}
+
+.video_entry>img {
+  float: left;
+}
+
 
 .video_entry_container {
   position: absolute;
   background-color: white;
   margin-top: 110px;
   margin-left: 620px;
-  width: 250px;
+  width: 280px;
 
+}
+
+.clearfix {
+  overflow: auto;
 }

@@ -30,10 +30,12 @@
 <div class="video_entry_container"> 
   <% if defined? @all_other_videos %>
     <% @all_other_videos.each do |video| %>
-      <div class="video_entry"> 
-          <b> <%= "video_title: "%> </b>  <%= video[:video_title] %> <br>
-          <b> <%= "video_id: "%> </b>  <%= video[:video_id] %> <br>
+      <div class="video_entry clearfix"> 
+          <img src="<%= video[:video_thumbnails_url] %>"> 
+          <%= video[:video_title] %> <br>
+          <!-- <b> <%= "video_id: "%> </b>  <%= video[:video_id] %> <br> -->
       </div>
     <% end %>
   <% end %>
 </div>
+

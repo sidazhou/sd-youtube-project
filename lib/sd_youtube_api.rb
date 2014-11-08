@@ -53,7 +53,10 @@ class SdYoutubeApi
     search_response.data.items.each do |search_result|
       case search_result.id.kind
         when 'youtube#video'
-          @videos.push({video_title: search_result.snippet.title, video_id: search_result.id.videoId})          
+          @videos.push({video_title: search_result.snippet.title,
+                        video_id: search_result.id.videoId,
+                        video_thumbnails_url: search_result.snippet.thumbnails.default.url
+                        })
         when 'youtube#channel'
           @channels.push({channel_title: search_result.snippet.title, channel_id: search_result.id.channelId})          
         when 'youtube#playlist'
@@ -73,14 +76,16 @@ end
 #   #    type_str: 'video,channel,playlist',
 #   #    part_str: 'id,snippet'  # this input arg has to be id,snippet for now
 
+#   #  search_response.data.items.first.snippet.thumbnails.default.url
+
 # myo = SdYoutubeApi.new(search_str: "dota", type_str: 'video', num_results: 5)
 # myo.execute_search
-
-# binding.pry
 
 # puts myo.videos
 # puts myo.videos.size
 # puts "======================"
+
+
 # puts myo.channels
 # puts "======================"
 
