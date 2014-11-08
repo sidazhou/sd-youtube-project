@@ -1,14 +1,14 @@
 <div id="header">
-  <img src="images/top_left.png" alt="" style="float: left;">
+  <img src="/images/top_left.png" alt="" style="float: left;">
   
   <div class="float_center">
     <form name="input" action="/show-me-all" method="post">
     <input type="text" name="searched_str" placeholder="show me all search">
-    <input type="image" src="images/search.png">
+    <input type="image" src="/images/search.png">
     </form>
   </div>
 
-  <img src="images/top_right.png" alt="" style="float: right;">
+  <img src="/images/top_right.png" alt="" style="float: right;">
 </div>
 
 
@@ -31,9 +31,11 @@
   <% if defined? @all_other_videos %>
     <% @all_other_videos.each do |video| %>
       <div class="video_entry clearfix"> 
-          <img src="<%= video[:video_thumbnails_url] %>"> 
-          <%= video[:video_title] %> <br>
-          <!-- <b> <%= "video_id: "%> </b>  <%= video[:video_id] %> <br> -->
+          <a href="/show-me-all/video/link/<%= video[:video_id] %>">
+            <img src="<%= video[:video_thumbnails_url] %>">
+          </a>   
+          <a href="/show-me-all/video/link/<%= video[:video_id] %>"><%= video[:video_title] %></a> <br>
+
       </div>
     <% end %>
   <% end %>
