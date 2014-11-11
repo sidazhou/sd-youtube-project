@@ -12,8 +12,8 @@ Brought to you by Lighthouse Labs
 TO DO LIST:
 
 - search functionality:
-  - show a playlist on the side
-  - get grouped videos from a channel
+  - DONE, show a playlist on the side
+  - DONE, get grouped videos from a channel
   - 
   
 - authenticate useing youtube logins
@@ -37,4 +37,12 @@ TO DO LIST:
     enablejsapi
     The enablejsapi allows you to enable the Javascript API to control the YouTube player. If you need this parameter (which is “1” to enable and “0” by default incidentally)
 
-- remember to remove DEVELOPER_KEY from source code
+
+- make deployment changes to master, from production
+- redirect on page not found
+- add UI
+- refractor code
+- improve algorithm (need refractor)
+- deploy, remember to remove DEVELOPER_KEY from source code
+
+

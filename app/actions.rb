@@ -120,16 +120,31 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
 
   # now the models and db are in place. Rendering next
   @all_video_groups = VideoGroup.all.order(:avg_relevance)
+  # # delete all series with only 1 game in it, to make things look better
+  # @all_video_groups.each do |vg|  ############################
+  #   if vg.videos.count <= 1
+  #     vg.destroy
+  #   end
+  # end
+  # # re-assigning the variable in memory based on the db
+  # @all_video_groups = VideoGroup.all.order(:avg_relevance).limit(5)
 
 
-  # used in displaying videos in the selected group
-  if !params[:video_group_id].nil? #if passed this argument in url
+  #if clicked on the groups
+  if !params[:video_group_id].nil? #if passed this argument in url, only happens when group is clicked
     @video_group_id = params[:video_group_id]
+    # @related_videos is the videos in the same group
     @related_videos = Video.where(video_group_id: @video_group_id).order(:video_title_game)
-
   end
 
-# binding.pry
+  if !params[:video_group_id].nil? && !params[:game].nil? 
+    #then overwrite the default
+    # EDIT: DO NOT OVERWRITE THE DEFAULT
+    game_num = params[:game].to_i
+    # video_id_NEW is only defined when group is clicked in <div class="box_below_main"> 
+    @video_id_NEW = @related_videos[game_num][:video_id]
+    @video_title_NEW = @related_videos[game_num][:video_title]
+  end
 
   erb :'show-me-groups'
 end
@@ -141,7 +156,7 @@ end
 
 get '/show-me-groups/video/link/:video_id' do
   # puts params[:video_id]
-  redirect '/show-me-groups/' + params[:video_id] + "?video_group_id=" + params[:video_group_id]
+  redirect '/show-me-groups/' + params[:video_id] + "?video_group_id=" + params[:video_group_id] +"&game=" + params[:game]
 end
 
 

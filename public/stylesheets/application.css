@@ -34,10 +34,6 @@ body {
   margin: 5px;
 }
 
-.video_entry:hover {
-  color: violet;
-}
-
 .video_entry img {
   float: left;
 }
