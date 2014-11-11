@@ -102,6 +102,11 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
     :database => "db/db.sqlite3"
   )
 
+        table_name = "video_groups"  # resetting db
+        new_max = 0
+        update_seq_sql = "update sqlite_sequence set seq = #{new_max} where name = '#{table_name}';"
+        ActiveRecord::Base.connection.execute(update_seq_sql)
+
   puts ActiveRecord::Base.connection.exec_query("INSERT INTO video_groups (group_title, avg_relevance) SELECT video_title_body, AVG(relevance) FROM videos GROUP BY video_title_body;").collect &:values
 
   # linking video.video_group_id with video_groups.id
@@ -116,6 +121,16 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
   # now the models and db are in place. Rendering next
   @all_video_groups = VideoGroup.all.order(:avg_relevance)
 
+
+  # used in displaying videos in the selected group
+  if !params[:video_group_id].nil? #if passed this argument in url
+    @video_group_id = params[:video_group_id]
+    @related_videos = Video.where(video_group_id: @video_group_id).order(:video_title_game)
+
+  end
+
+# binding.pry
+
   erb :'show-me-groups'
 end
 
@@ -126,7 +141,7 @@ end
 
 get '/show-me-groups/video/link/:video_id' do
   # puts params[:video_id]
-  redirect '/show-me-groups/' + params[:video_id]
+  redirect '/show-me-groups/' + params[:video_id] + "?video_group_id=" + params[:video_group_id]
 end
 
 
