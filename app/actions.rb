@@ -64,6 +64,7 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
   # to get the video into iframe
   video_id_temp = params[:video_id]
 
+
   # to get other videos, since I need to 
   # 1) get the video_title, using one search
   # 2) use the video_title in 2nd search to get other videos
@@ -74,6 +75,8 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
   
   sd_obj = SdYoutubeApi.new(search_str: @video_title, num_results: 50, type_str: 'video')
   sd_obj.execute_search
+  
+  # from before # 
   @all_other_videos = sd_obj.videos.select { |video| video[:video_title] != @video_title }
 
 # # For testing, use tux, not implemented
@@ -86,7 +89,8 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
                   video_title: video[:video_title],
                   video_title_body: video[:video_title].force_encoding("UTF-8").gsub(game_regex,''),
                   video_title_game: video[:video_title].force_encoding("UTF-8")[game_regex],
-                  relevance: index
+                  relevance: index,
+                  video_thumbnails_url: video[:video_thumbnails_url]
                 )
   }
 
@@ -110,8 +114,7 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
   end
 
   # now the models and db are in place. Rendering next
-
-
+  @all_video_groups = VideoGroup.all.order(:avg_relevance)
 
   erb :'show-me-groups'
 end

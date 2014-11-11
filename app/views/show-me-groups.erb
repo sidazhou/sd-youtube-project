@@ -41,3 +41,45 @@
   <% end %>
 </div>
 
+
+<div class="box_below_main"> 
+
+
+
+  <% if defined? @all_video_groups %>
+    <% @all_video_groups.each do |vg| %>
+      <h3><%= "#{vg.group_title}, contains: #{vg.videos.count} video(s)" %></h3>
+      <img src="<%= vg.videos.first[:video_thumbnails_url] %>">
+    <% end %>
+  <% end %>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

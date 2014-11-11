@@ -7,6 +7,7 @@ class AddVideosTemp < ActiveRecord::Migration
       t.string :video_title_game
       t.float :relevance
       t.belongs_to :video_group
+      t.string :video_thumbnails_url
     end
 
     create_table :video_groups do |t|

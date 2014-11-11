@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20141108145200) do
     t.string  "video_title_game"
     t.float   "relevance"
     t.integer "video_group_id"
+    t.string  "video_thumbnails_url"
   end
 
 end

@@ -18,3 +18,11 @@ insert into video_groups (group_title, avg_relevance) select video_title_body, a
 # Video.joins('LEFT JOIN video_groups ON video_groups.group_title = videos.video_group_id')
 
 pp Video.where(video_group_id: 171); nil
+
+VideoGroup.find(171).videos.count
+
+VideoGroup.all.each { |vg| puts vg.videos.count }; nil
+VideoGroup.all.each { |vg| puts vg.videos.count; puts vg.avg_relevance }; nil
+
+pp VideoGroup.all.order(:avg_relevance); nil
+
