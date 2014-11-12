@@ -12,11 +12,7 @@ configure do
   end
 
   if Sinatra::Application.production?
-    p ENV
-    set :database, {
-      adapter: "postgresql",
-      url: ENV['DATABASE_URL']
-    }
+    set :database, ENV['DATABASE_URL']
   end
   
   # Load all models from app/models, using autoload instead of require
