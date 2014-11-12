@@ -97,15 +97,18 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
   # populating video_groups table
   VideoGroup.delete_all # resetting db
 
-  ActiveRecord::Base.establish_connection(
-    :adapter => 'sqlite3',
-    :database => "db/db.sqlite3"
-  )
 
+    if Sinatra::Application.development? # sqlite3 
         table_name = "video_groups"  # resetting db
         new_max = 0
         update_seq_sql = "update sqlite_sequence set seq = #{new_max} where name = '#{table_name}';"
         ActiveRecord::Base.connection.execute(update_seq_sql)
+    end
+
+    if Sinatra::Application.production? # postgresql 
+      table_name = "video_groups"  # resetting db
+      ActiveRecord::Base.connection.reset_pk_sequence!(table_name)
+    end
 
   puts ActiveRecord::Base.connection.exec_query("INSERT INTO video_groups (group_title, avg_relevance) SELECT video_title_body, AVG(relevance) FROM videos GROUP BY video_title_body;").collect &:values
 
