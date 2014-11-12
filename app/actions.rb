@@ -99,6 +99,7 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
 
 
     if Sinatra::Application.development? # sqlite3 
+
         table_name = "video_groups"  # resetting db
         new_max = 0
         update_seq_sql = "update sqlite_sequence set seq = #{new_max} where name = '#{table_name}';"
