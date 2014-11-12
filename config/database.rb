@@ -12,6 +12,7 @@ configure do
   end
 
   if Sinatra::Application.production?
+    p ENV
     set :database, {
       adapter: "postgresql",
       url: ENV['DATABASE_URL']
