@@ -1,18 +1,23 @@
 configure do
 
+
   # Log queries to STDOUT in development
   if Sinatra::Application.development?
     ActiveRecord::Base.logger = Logger.new(STDOUT)
+
+    set :database, {
+      adapter: "sqlite3",
+      database: "db/db.sqlite3"
+    }
   end
 
-  config = YAML.load_file(
-    File.join(
-      Dir.getwd, 'config', 'database.yml'
-    )
-  )[Sinatra::Application.environment]
-
-  set :database, config
-
+  if Sinatra::Application.production?
+    set :database, {
+      adapter: "postgresql",
+      url: ENV['DATABASE_URL']
+    }
+  end
+  
   # Load all models from app/models, using autoload instead of require
   # See http://www.rubyinside.com/ruby-techniques-revealed-autoload-1652.html
   Dir[APP_ROOT.join('app', 'models', '*.rb')].each do |model_file|
