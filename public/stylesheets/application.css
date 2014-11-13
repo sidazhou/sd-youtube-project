@@ -123,6 +123,10 @@ body > div > div:nth-child(1) > nav {
   background-color: white;
 }
 
+a {
+    text-decoration: none !important;
+}
+
 /*http://stackoverflow.com/questions/12166784/how-to-implement-a-responsive-youtube-embed-iframe-with-twitter-bootstrap
 https://gist.github.com/jgarber/2302238*/
 .flex-video {

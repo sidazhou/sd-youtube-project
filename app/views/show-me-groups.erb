@@ -50,11 +50,18 @@
         <% end %>
       </div>
 
-      <% if defined? @video_title_NEW %>
-        <p> <h4> <%=  @video_title_NEW  %> </h4> </p>
-      <% else %>
-        <p> <h4> <%=  @video_title  %> </h4> </p>
-      <% end %> 
+      
+
+      <div class="panel panel-default">
+        <div class="panel-body"> <h4>
+          <% if defined? @video_title_NEW %>
+            <%=  @video_title_NEW  %>
+          <% else %>
+            <%=  @video_title  %>
+          <% end %> 
+        </h4></div>
+      </div>
+ 
 
       <% if defined? @video_group_id %>
         <div class="btn-group btn-group-md">
