@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!--
-    normalize.css removes cross-browser differences in defaults, e.g.,
-    differences in how form elements appear between Firefox and IE
-    See: http://necolas.github.com/normalize.css/
-  -->
-  <link rel="stylesheet" href="/stylesheets/normalize.css">
-  <!--
-    application.css is where you put your styles
-  -->
-  <link rel="stylesheet" href="/stylesheets/application.css">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="/javascript/application.js"></script>
+    <!-- Should not use normalize.css with bootstrap -->
+    <!-- Bootstrap: Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
-  <title></title>
-</head>
-<body>
-  <%= yield %>
-</body>
+    <!-- Bootstrap: Optional theme -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"> -->
+
+    <!--
+      application.css is where you put your styles
+    -->
+    <link rel="stylesheet" href="/stylesheets/application.css">
+
+  </head>
+  
+  <body>
+
+    
+    <%= yield %>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+    <!-- Bootstrap: Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    
+    <!-- Custom scripts -->
+    <script src="/javascript/application.js"></script>
+
+  </body>
 </html>
