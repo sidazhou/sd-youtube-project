@@ -143,11 +143,24 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
   if !params[:video_group_id].nil? && !params[:game].nil? 
     #then overwrite the default
     # EDIT: DO NOT OVERWRITE THE DEFAULT
-    game_num = params[:game].to_i
-    # video_id_NEW is only defined when group is clicked in <div class="box_below_main"> 
 
-    @video_id_NEW = @related_videos[game_num][:video_id]
-    @video_title_NEW = @related_videos[game_num][:video_title]
+    game_num = params[:game].to_i
+
+    # redundant, this is fixed in the button instead of here
+    if game_num < 0
+      game_num = 0 # happens when we are at first game of the series, negative index means going to the end of our db(?)
+    end
+
+    # video_id_NEW is only defined when group is clicked in <div class="box_below_main"> 
+    begin
+      @video_id_NEW = @related_videos[game_num][:video_id]
+      @video_title_NEW = @related_videos[game_num][:video_title]
+      @no_more_videos_flag = false
+    rescue # happens when we are at last game of the series  # then return the last vid in the db
+      @video_id_NEW = @related_videos[-1][:video_id] 
+      @video_title_NEW = @related_videos[-1][:video_title]
+      @no_more_videos_flag = true
+    end
   end
   
   # # hacks to make any search to return grouped results, ie not only on click of the group 

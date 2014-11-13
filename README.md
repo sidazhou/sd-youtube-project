@@ -43,8 +43,6 @@ TO DO LIST:
 
 
 - make deployment changes to master, from production
-- redirect on page not found
-- add UI
 - refractor code
 - improve algorithm (need refractor)
 - deploy, remember to remove DEVELOPER_KEY from source code

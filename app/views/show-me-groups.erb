@@ -59,13 +59,20 @@
       <% if defined? @video_group_id %>
         <div class="btn-group btn-group-md">
 
-           <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= params[:video_group_id] %>&game=<%= params[:game].to_i - 1 %>">
+           <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= params[:video_group_id] %>&game=<%= 
+           if @no_more_videos_flag
+            params[:game].to_i - 2 
+           else
+            params[:game].to_i<=0? 0 : params[:game].to_i - 1 
+           end
+           %>">
+
              <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-fast-backward"></em> 
              Previous Game
              </button>  
            </a>
 
-           <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= params[:video_group_id] %>&game=<%= params[:game].to_i + 1 %>">
+           <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= params[:video_group_id] %>&game=<%= @no_more_videos_flag? params[:game].to_i : params[:game].to_i + 1 %>">
              <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-fast-forward"></em>
              Next Game
              </button> 
