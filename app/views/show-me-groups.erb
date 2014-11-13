@@ -17,9 +17,9 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <form class="navbar-form navbar-left" role="search" id="search_form">
+          <form class="navbar-form navbar-left" role="search" id="search_form" name="input" action="/show-me-groups" method="post">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
+              <input type="text" name="searched_str" class="form-control" placeholder="show me groups search">
             </div>
             <button type="submit" class="btn btn-default">
               <span class="glyphicon glyphicon-search"></span>  
@@ -41,17 +41,45 @@
   <div class="row clearfix">
     <div class="col-md-8 column">
 
+  <!-- http://stackoverflow.com/questions/15718894/hide-frame-progress-bar-and-buttons-from-youtube-film -->
       <div class="flex-video widescreen">
-        <iframe src="//www.youtube.com/embed/WPvGqX-TXP0" frameborder="0" allowfullscreen></iframe>
-      </div>  
-
-      <div class="btn-group btn-group-md">
-         <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-fast-backward"></em> Left</button>  
-         <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-fast-forward"></em> Right</button> 
+        <% if defined? @video_id_NEW %>
+        <iframe src="//www.youtube.com/embed/<%=  @video_id_NEW  %>?controls=0&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
+        <% else %>
+        <iframe src="//www.youtube.com/embed/<%=  @video_id  %>?controls=0&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
+        <% end %>
       </div>
+
+      <% if defined? @video_title_NEW %>
+        <p> <h4> <%=  @video_title_NEW  %> </h4> </p>
+      <% else %>
+        <p> <h4> <%=  @video_title  %> </h4> </p>
+      <% end %> 
+
+      <% if defined? @video_group_id %>
+        <div class="btn-group btn-group-md">
+
+           <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= params[:video_group_id] %>&game=<%= params[:game].to_i - 1 %>">
+             <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-fast-backward"></em> 
+             Previous Game
+             </button>  
+           </a>
+
+           <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= params[:video_group_id] %>&game=<%= params[:game].to_i + 1 %>">
+             <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-fast-forward"></em>
+             Next Game
+             </button> 
+          </a>
+
+        </div>
+      <% end %>
+
+
     </div>
     <div class="col-md-4 column">
       <div class="panel-group" id="panel-437402">
+
+
         <div class="panel panel-default">
           <div class="panel-heading">
              Collapsible Group Item #1
@@ -68,6 +96,8 @@
             </div>
           </div>
         </div>
+
+
         <div class="panel panel-default">
           <div class="panel-heading">
              Collapsible Group Item #2
@@ -80,7 +110,85 @@
             </div>
           </div>
         </div>
+
+
+
+        <% if defined? @all_video_groups %>
+          <% @all_video_groups.each do |vg| %>
+              <div class="panel panel-default">
+
+                <div class="panel-heading clearfix">
+
+                  <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= vg.id %>&game=0">
+                  <img src="<%= vg.videos.first[:video_thumbnails_url] %>">
+                  </a>
+
+                  <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= vg.id %>&game=0">
+                    <%= "#{vg.group_title}, contains: #{vg.videos.count} video(s)" %>
+                  </a>  
+
+                </div>
+                
+
+              </div>
+          <% end %>
+        <% end %>
+
+
+
       </div>
     </div>
   </div>
+
+
+<!-- for development -->
+<div class="video_entry_container"> 
+  <% if defined? @all_other_videos %>
+    <h3>Related videos</h3>
+    <% @all_other_videos.each do |video| %>
+      <div class="video_entry clearfix"> 
+          <a href="/show-me-groups/video/link/<%= video[:video_id] %>">
+            <img src="<%= video[:video_thumbnails_url] %>">
+          </a>   
+          <a href="/show-me-groups/video/link/<%= video[:video_id] %>"><%= video[:video_title] %></a> <br>
+
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+
+
+<div class="box_below_main"> 
+
+  <% if defined? @all_video_groups %>
+    <h3>Related videos, grouped</h3>
+    <% @all_video_groups.each do |vg| %>
+      <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= vg.id %>&game=0">
+      <h3><%= "#{vg.group_title}, contains: #{vg.videos.count} video(s)" %></h3>
+      </a>  
+      <img src="<%= vg.videos.first[:video_thumbnails_url] %>">
+    <% end %>
+  <% end %>
+
+</div>
+
+
+<div class="video_entry_container2"> 
+  <% if defined? @video_group_id %>
+    <h3>videos in the group</h3>
+    atm, the main video is not changed 
+    <h4>video_group_id = <%= @video_group_id %></h4>
+
+    <% @related_videos.each do |video| %>
+      <div class="video_entry clearfix"> 
+            <img src="<%= video[:video_thumbnails_url] %>">
+          <%= video[:video_title] %> <br>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+
+
 </div>

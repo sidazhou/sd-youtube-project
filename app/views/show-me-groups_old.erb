@@ -1,4 +1,4 @@
-<div id="header">
+<!-- <div id="header">
   <img src="/images/top_left.png" alt="" style="float: left;">
   
   <div class="float_center">
@@ -10,32 +10,32 @@
 
   <img src="/images/top_right.png" alt="" style="float: right;">
 </div>
+ -->
 
-
-<div id="main">
+<!-- <div id="main">
   <a href="/">return to home page</a>
-  <h1> puts first video to iframe, and puts other videos on the side inside groups</h1>
+  <h1> puts first video to iframe, and puts other videos on the side inside groups</h1> -->
 
 
   <!-- http://stackoverflow.com/questions/15718894/hide-frame-progress-bar-and-buttons-from-youtube-film -->
-  <% if defined? @video_id_NEW %>
+<!--   <% if defined? @video_id_NEW %>
   <iframe width="560" height="315" src="//www.youtube.com/embed/<%=  @video_id_NEW  %>?controls=0&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
   <% else %>
   <iframe width="560" height="315" src="//www.youtube.com/embed/<%=  @video_id  %>?controls=0&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
-  <% end %>
+  <% end %> -->
 
-  <% if defined? @video_title_NEW %>
+<!--   <% if defined? @video_title_NEW %>
   <h4> <%=  @video_title_NEW  %> </h4>
   <% else %>
   <h4> <%=  @video_title  %> </h4>
   <% end %>
-
+ -->
   <% if defined? @video_group_id %>
     <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= params[:video_group_id] %>&game=<%= params[:game].to_i - 1 %>">previous game in the series</a> <br>
     <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= params[:video_group_id] %>&game=<%= params[:game].to_i + 1 %>">next game in the series</a>
   <% end %>
 
-</div>
+<!-- </div> -->
 
 
 

@@ -114,6 +114,14 @@ body > div > div:nth-child(1) > nav {
   background-color: white;
 }
 
+.panel.panel-default img {
+  float: left;
+  margin-right: 15px;
+}
+
+.panel-default>.panel-heading {
+  background-color: white;
+}
 
 /*http://stackoverflow.com/questions/12166784/how-to-implement-a-responsive-youtube-embed-iframe-with-twitter-bootstrap
 https://gist.github.com/jgarber/2302238*/

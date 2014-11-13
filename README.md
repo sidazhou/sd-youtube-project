@@ -50,3 +50,6 @@ TO DO LIST:
 - deploy, remember to remove DEVELOPER_KEY from source code
 
 
+- hover on link effect delete
+- white box around video title
+
