@@ -53,3 +53,4 @@ TO DO LIST:
 - hover on link effect delete
 - white box around video title
 
+- BUG in <%= str=video[:video_title_game]; str.match(/[Gg]ame (\d+)/).captures[0].to_i - 1 unless str.nil? %>, IF THERE IS GAME 1, 3, 4 then it wont match the db  (ONLY APPLICABLE FOR SPY VIEW) (IE NEED TO VALIDATE THE GAME NUMBERS BEFORE ENTERING THE DB)

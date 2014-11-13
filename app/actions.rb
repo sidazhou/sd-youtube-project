@@ -134,7 +134,6 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
   # @all_video_groups = VideoGroup.all.order(:avg_relevance).limit(5)
 
 
-  #if clicked on the groups
   if !params[:video_group_id].nil? #if passed this argument in url, only happens when group is clicked
     @video_group_id = params[:video_group_id]
     # @related_videos is the videos in the same group
@@ -146,11 +145,17 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
     # EDIT: DO NOT OVERWRITE THE DEFAULT
     game_num = params[:game].to_i
     # video_id_NEW is only defined when group is clicked in <div class="box_below_main"> 
+
     @video_id_NEW = @related_videos[game_num][:video_id]
     @video_title_NEW = @related_videos[game_num][:video_title]
   end
-
-  erb :'show-me-groups'
+  
+  # # hacks to make any search to return grouped results, ie not only on click of the group 
+  if params[:video_group_id].nil? || params[:game].nil? 
+    redirect '/show-me-groups/' + params[:video_id] + "?video_group_id=" + Video.find_by(video_id: @video_id)[:video_group_id].to_s + "&game=0"
+  else
+    erb :'show-me-groups'
+  end
 end
 
 
