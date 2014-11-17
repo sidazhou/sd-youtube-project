@@ -1,3 +1,5 @@
+# enable :sessions
+
 # Homepage (Root path)
 get '/' do
   erb :index
@@ -78,7 +80,7 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
   
   # from before # 
   @all_other_videos = sd_obj.videos.select { |video| video[:video_title] != @video_title }
-
+# binding.pry
 # # For testing, use tux, not implemented
   Video.delete_all # resetting db
 

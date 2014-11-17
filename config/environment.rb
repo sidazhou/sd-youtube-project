@@ -7,6 +7,10 @@ require 'active_support/all'
 require 'sinatra'
 require 'sinatra/activerecord'
 
+if Sinatra::Application.development?
+  require 'pry'
+end
+
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 APP_NAME = APP_ROOT.basename.to_s
 
