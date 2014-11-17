@@ -44,6 +44,11 @@ TO DO LIST:
 
 - refractor code
 - improve algorithm (need refractor)
-- need refractor for real deployment, remember to remove DEVELOPER_KEY from source code
+- need refractor for real deployment, remember to remove DEVELOPER_KEY from source code (look at dotenv gem)
 
 - BUG in <%= str=video[:video_title_game]; str.match(/[Gg]ame (\d+)/).captures[0].to_i - 1 unless str.nil? %>, IF THERE IS GAME 1, 3, 4 then it wont match the db  (ONLY APPLICABLE FOR SPY VIEW) (IE NEED TO VALIDATE THE GAME NUMBERS BEFORE ENTERING THE DB)
+
+- write helpers methods, and put into action.rb
+
+- using /page/param/val/param2/val2 instead of /page?param=val&param2=val2
+- set instance variable = params[:key] to pass to views 

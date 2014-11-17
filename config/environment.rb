@@ -32,3 +32,7 @@ require 'trollop'
 
 require_relative '../lib/sd_youtube_api'
 require_relative '../lib/helpers'
+
+require 'dotenv'
+Dotenv.load
+

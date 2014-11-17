@@ -15,6 +15,8 @@ gem 'google-api-client'
 gem 'json'
 gem 'trollop'
 
+gem 'dotenv'
+
 group :development, :test do
   gem 'pry'
   gem 'pry-byebug'
