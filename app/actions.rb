@@ -62,10 +62,10 @@ get '/show-me-groups' do
   redirect '/show-me-groups/' + default_url
 end
 
-get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
+get '/show-me-groups/:video_id' do  
   # to get the video into iframe
   video_id_temp = params[:video_id]
-
+# video_id_temp = 'PV4H8bWqDds' ######## DK%20vs%20iG%20G-League%202014   
 
   # to get other videos, since I need to 
   # 1) get the video_title, using one search
@@ -80,70 +80,81 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
   
   # from before # 
   @all_other_videos = sd_obj.videos.select { |video| video[:video_title] != @video_title }
-# binding.pry
-# # For testing, use tux, not implemented
-  Video.delete_all # resetting db
 
-  # populating videos table
+  # populating video_table
   game_regex  = /[Gg]ame \d/ # used in the loop below
-  sd_obj.videos.each_with_index { |video,index|
-    Video.create( video_id: video[:video_id], 
-                  video_title: video[:video_title],
-                  video_title_body: video[:video_title].force_encoding("UTF-8").gsub(game_regex,''),
-                  video_title_game: video[:video_title].force_encoding("UTF-8")[game_regex],
-                  relevance: index,
-                  video_thumbnails_url: video[:video_thumbnails_url]
-                )
-  }
+  video_table = sd_obj.videos
 
-  # populating video_groups table
-  VideoGroup.delete_all # resetting db
+  video_table.each_with_index do |video,index|
+    video[:id] = index
+    video[:relevance] = index
+    video[:video_title_body] = video[:video_title].force_encoding("UTF-8").gsub(game_regex,'')
+    video[:video_title_game] = video[:video_title].force_encoding("UTF-8")[game_regex]
+  end
 
+  # instead of Video model, now i have video_table, which is arr of hashes
+  # instead of VideoGroup model, now i have video_group_table, which is arr of hashes
 
-    if Sinatra::Application.development? # sqlite3 
+  # SORTING the video_table, https://www.ruby-forum.com/topic/194331
+  video_table.sort! do |video1 , video2|
+    first  =   video1[:video_title_body] <=> video2[:video_title_body]   #first condition
+    second =   video1[:video_title_game] <=> video2[:video_title_game]   #second condition
 
-        table_name = "video_groups"  # resetting db
-        new_max = 0
-        update_seq_sql = "update sqlite_sequence set seq = #{new_max} where name = '#{table_name}';"
-        ActiveRecord::Base.connection.execute(update_seq_sql)
+    first.zero? ? second : first #if they are equal on first
+                                 #then return second
+  end
+  @video_table = video_table
+
+  # BUILDING the video_group_table
+  video_group_table = []
+
+  index_vg = 0
+  video_group_table[index_vg] = {} #initialize, otherwise you cant assign
+  video_group_table[index_vg][:id] = index_vg #initialize, otherwise you cant assign
+  video_group_table[index_vg][:video_count] = 0
+  video_group_table[index_vg][:avg_relevance] = 0
+  video_group_table[index_vg][:group_title] = video_table.first[:video_title_body]
+
+  video_table.each_with_index do |video,index_v|
+
+    if video[:video_title_body] == video_group_table[index_vg][:group_title]
+      video[:video_group_id] = video_group_table[index_vg][:id]
+      video_group_table[index_vg][:video_count] = video_group_table[index_vg][:video_count] + 1
+      video_group_table[index_vg][:avg_relevance] = (video_group_table[index_vg][:avg_relevance] + video[:relevance] ) / video_group_table[index_vg][:video_count]
+    else #else create next video_group
+      index_vg = index_vg + 1
+      video_group_table[index_vg] = {} #initialize, otherwise you cant assign
+      video_group_table[index_vg][:id] = index_vg #initialize, otherwise you cant assign
+      video_group_table[index_vg][:video_count] = 0
+      video_group_table[index_vg][:avg_relevance] = 0
+      video_group_table[index_vg][:group_title] = video[:video_title_body]
+      redo # restart this iteration of the loop?
     end
 
-    if Sinatra::Application.production? # postgresql 
-      table_name = "video_groups"  # resetting db
-      ActiveRecord::Base.connection.reset_pk_sequence!(table_name)
-    end
+  end #end each
 
-  puts ActiveRecord::Base.connection.exec_query("INSERT INTO video_groups (group_title, avg_relevance) SELECT video_title_body, AVG(relevance) FROM videos GROUP BY video_title_body;").collect &:values
-
-  # linking video.video_group_id with video_groups.id
-  Video.all.each do |video|
-    VideoGroup.all.each do |video_group|
-      if  video_group.group_title == video.video_title_body
-            video.update(video_group_id: video_group.id)
-      end
-    end
+  # SORTING the video_group_table
+  video_group_table.sort! do |vg1 , vg2|
+    vg1[:avg_relevance] <=> vg2[:avg_relevance]
   end
 
   # now the models and db are in place. Rendering next
-  @all_video_groups = VideoGroup.all.order(:avg_relevance)
+  @all_video_groups = video_group_table
   # # delete all series with only 1 game in it, to make things look better
-  # @all_video_groups.each do |vg|  ############################
-  #   if vg.videos.count <= 1
-  #     vg.destroy
-  #   end
-  # end
-  # # re-assigning the variable in memory based on the db
-  # @all_video_groups = VideoGroup.all.order(:avg_relevance).limit(5)
+  # @all_video_groups = video_group_table.select do |vg|  #hash
+  #   vg[:video_count] > 1
+  # end[0..4] # limit(5), seem to be ordered already so .order(:avg_relevance) is not needed
 
 
   if !params[:video_group_id].nil? #if passed this argument in url, only happens when group is clicked
     @video_group_id = params[:video_group_id]
     # @related_videos is the videos in the same group
-    @related_videos = Video.where(video_group_id: @video_group_id).order(:video_title_game)
+    @related_videos = video_table.select { |v| v[:video_group_id] == @video_group_id.to_i } #maybe its already ordered, so no need .order(:video_title_game)
   end
 
   if !params[:video_group_id].nil? && !params[:game].nil? 
-    #then overwrite the default
+
+    # then overwrite the default
     # EDIT: DO NOT OVERWRITE THE DEFAULT
 
     game_num = params[:game].to_i
@@ -165,9 +176,11 @@ get '/show-me-groups/:video_id' do  ######## DK vs iG G-League 2014
     end
   end
   
+
+
   # # hacks to make any search to return grouped results, ie not only on click of the group 
   if params[:video_group_id].nil? || params[:game].nil? 
-    redirect '/show-me-groups/' + params[:video_id] + "?video_group_id=" + Video.find_by(video_id: @video_id)[:video_group_id].to_s + "&game=0"
+    redirect '/show-me-groups/' + params[:video_id] + "?video_group_id=" + video_table.select { |v| v[:video_id] == @video_id}.first[:video_group_id].to_s + "&game=0"
   else
     erb :'show-me-groups'
   end
