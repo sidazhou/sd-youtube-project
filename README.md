@@ -14,14 +14,14 @@ Layout generated from `http://www.layoutit.com/`
 - authenticate useing youtube logins
 - ability to change quality, 360p 480p etc
 - fast forward button / rewind functionality, link to keybord shortcuts (disablekb=0) 
-
+```
     Spacebar:  Play / Pause
     Arrow Left:  Jump back 5s in the current video
     Arrow Right:  Jump ahead 5s in the current video
     Arrow Up:  Volume up 5%
     Arrow Down:  Volume Down 5%
     enablejsapi allows you to enable the Javascript API to control the YouTube player. If you need this parameter     (which is “1” to enable and “0” by default incidentally)
-
+```
 - refractor the code
 - improve algorithm (need refractor)
 - need refractor for real deployment, remember to remove DEVELOPER_KEY from source code (look at dotenv gem)
