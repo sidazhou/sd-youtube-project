@@ -147,9 +147,9 @@ get '/show-me-groups/:video_id' do
   # now the models and db are in place. Rendering next
   @all_video_groups = video_group_table
   # # delete all series with only 1 game in it, to make things look better
-  # @all_video_groups = video_group_table.select do |vg|  #hash
-  #   vg[:video_count] > 1
-  # end[0..4] # limit(5), seem to be ordered already so .order(:avg_relevance) is not needed
+  @all_video_groups = video_group_table.select do |vg|  #hash
+    vg[:video_count] > 1
+  end[0..4] # limit(5), seem to be ordered already so .order(:avg_relevance) is not needed
 
 
   if !params[:video_group_id].nil? #if passed this argument in url, only happens when group is clicked
