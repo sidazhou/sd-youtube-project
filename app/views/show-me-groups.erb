@@ -94,16 +94,7 @@
       <div class="panel-group" id="panel-437402">
 
         <% if defined? @video_group_id %>
-        <% if @all_video_groups.empty? %>
-          <h3>No SERIES was found</h3>  
-          <h4>Please try one of the following sample search terms:</h4>
-          <ul>
-            <li>DK vs iG G-League 2014</li>
-            <li>DotaCinemaVODS </li>
-            <li>Dreamhack Grand Finals starcraft 2</li>
-            <li>league of legends world championship</li>
-          </ul>
-        <% end %>
+
 
           <% @all_video_groups.each do |vg| %>
               <div class="panel panel-default">
@@ -135,7 +126,19 @@
                   </div>
 
                 </div>
-
+                <% if @all_video_groups.size <= 1 %>
+                <%# for example "sdfdsfs" will give a series, which is undesired %>
+                  <div class="panel-body">
+                  <h3>No SERIES was found</h3>  
+                  <h4>Please try one of the following sample search terms:</h4>
+                  <ul>
+                    <li>DK vs iG G-League 2014</li>
+                    <li>DotaCinemaVODS </li>
+                    <li>Dreamhack Grand Finals starcraft 2</li>
+                    <li>league of legends world championship</li>
+                  </ul>
+                  </div>
+                <% end %>
               </div>
           <% end %>
         <% end %>
