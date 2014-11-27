@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <form class="navbar-form navbar-left" role="search" id="search_form" name="input" action="/show-me-groups" method="post">
             <div class="form-group">
-              <input type="text" name="searched_str" class="form-control" placeholder="show me groups search">
+              <input type="text" name="searched_str" class="form-control" placeholder="Search SERIES">
             </div>
             <button type="submit" class="btn btn-default">
               <span class="glyphicon glyphicon-search"></span>  
@@ -94,6 +94,10 @@
       <div class="panel-group" id="panel-437402">
 
         <% if defined? @video_group_id %>
+<!--         <% if @all_video_groups.empty? %>
+          <h1> all_video_groups is empty</h1>  
+        <% end %> -->
+
           <% @all_video_groups.each do |vg| %>
               <div class="panel panel-default">
                 

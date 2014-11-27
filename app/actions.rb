@@ -62,6 +62,10 @@ get '/show-me-groups' do
   redirect '/show-me-groups/' + default_url
 end
 
+get '/show-me-groups-error' do
+  erb :'show-me-groups-error'
+end
+
 get '/show-me-groups/:video_id' do  
   # to get the video into iframe
   video_id_temp = params[:video_id]
@@ -72,6 +76,8 @@ get '/show-me-groups/:video_id' do
   # 2) use the video_title in 2nd search to get other videos
   sd_obj = SdYoutubeApi.new(search_str: video_id_temp, num_results: 1, type_str: 'video')
   sd_obj.execute_search
+  redirect '/show-me-groups-error' if sd_obj.videos.first.nil?
+
   @video_id = sd_obj.videos.first[:video_id]
   @video_title = sd_obj.videos.first[:video_title]  
   
