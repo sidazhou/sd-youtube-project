@@ -94,8 +94,6 @@
       <div class="panel-group" id="panel-437402">
 
         <% if defined? @video_group_id %>
-
-
           <% @all_video_groups.each do |vg| %>
               <div class="panel panel-default">
                 
@@ -122,10 +120,13 @@
 
 <% @video_table.select { |v| v[:video_group_id] == vg[:id] }.each do |video| %>  
                     <a href="/show-me-groups/video/link/<%= @video_id %>?video_group_id=<%= vg[:id] %>&game=<%= str=video[:video_title_game]; str.match(/[Gg]ame (\d+)/).captures[0].to_i - 1 unless str.nil? %>"><%= video[:video_title_game] %></a> <br>
-                  <% end %>
+                  <% end %>  <!-- enddo -->
                   </div>
 
                 </div>
+
+              </div>
+          <% end %> <!-- enddo -->
                 <% if @all_video_groups.size <= 1 %>
                 <%# for example "sdfdsfs" will give a series, which is undesired %>
                   <div class="panel-body">
@@ -135,13 +136,11 @@
                     <li>DK vs iG G-League 2014</li>
                     <li>DotaCinemaVODS </li>
                     <li>Dreamhack Grand Finals starcraft 2</li>
-                    <li>league of legends world championship</li>
+                    <li>League of Legends World Championship</li>
                   </ul>
                   </div>
                 <% end %>
-              </div>
-          <% end %>
-        <% end %>
+        <% end %> <!-- endif -->
 
 
       </div>
